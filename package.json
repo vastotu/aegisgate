@@ -1,0 +1,25 @@
+{
+  "name": "aegisgate-monorepo",
+  "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "scripts": {
+    "db:generate": "pnpm --filter @aegisgate/db db:generate",
+    "db:migrate": "pnpm --filter @aegisgate/db db:migrate",
+    "db:push": "pnpm --filter @aegisgate/db db:push",
+    "db:seed": "pnpm --filter @aegisgate/db db:seed",
+    "dev:gateway": "pnpm --filter @aegisgate/gateway dev",
+    "start:gateway": "pnpm --filter @aegisgate/gateway start",
+    "dev:console": "pnpm --filter @aegisgate/console dev",
+    "cli:top": "pnpm --filter @aegisgate/cli top",
+    "cli:bench": "pnpm --filter @aegisgate/cli bench",
+    "cli:sim": "pnpm --filter @aegisgate/cli sim",
+    "test": "tsx scripts/verify-all.ts",
+    "typecheck": "pnpm -r typecheck && tsc -p scripts/tsconfig.json"
+  },
+  "devDependencies": {
+    "@aegisgate/shared": "workspace:*",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
