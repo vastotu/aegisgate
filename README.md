@@ -9,6 +9,8 @@ SHA-256 hash-chained double-entry ledger, delivered as one gateway, one SDK, one
 
 `TypeScript 5` · `Fastify 5` · `Redis 7 Lua` · `PostgreSQL 16 + Drizzle` · `Next.js 14` · `pnpm workspaces`
 
+**🌐 Live console:** [aegisgate-ten.vercel.app](https://aegisgate-ten.vercel.app) · **🩺 Live gateway:** [aegisgate-gateway.onrender.com/health](https://aegisgate-gateway.onrender.com/health)
+
 </div>
 
 ---
@@ -325,7 +327,7 @@ npx pnpm@9.12.0 test          # in-process verification suite, 13 checks in ~0.1
 npx pnpm@9.12.0 cli:sim       # boundary-burst comparison (runs locally if the gateway is down)
 
 npx pnpm@9.12.0 dev:gateway   # :4000, falls back to in-memory limiter + offline showcase tenants
-npx pnpm@9.12.0 dev:console   # :3000, uses the live gateway or the in-browser engine
+NEXT_PUBLIC_GATEWAY_URL=http://localhost:4000 npx pnpm@9.12.0 dev:console   # :3000, falls back to the in-browser engine
 npx pnpm@9.12.0 cli:bench     # 80 checks at concurrency 15 against HappyShark's /api/room/join
 npx pnpm@9.12.0 cli:top       # full-screen live telemetry war-room (q to quit)
 ```
@@ -367,8 +369,10 @@ curl -i 'localhost:4000/proxy/happyshark/api/room/join?demo=true' -H 'x-aegis-mo
 4. **💰 FinOps & Pricing Simulator**: per-route revenue, estimated infra cost and margin (flags
    negative-margin routes), plus MRR / ARR / COGS / DDoS-savings projections across three pricing models.
 
-Set `NEXT_PUBLIC_GATEWAY_URL` to point the console at a deployed gateway. Deployed alone (e.g. Vercel), the
-console runs entirely on its in-browser engine.
+The console talks to the hosted gateway (`https://aegisgate-gateway.onrender.com`) by default; set
+`NEXT_PUBLIC_GATEWAY_URL=http://localhost:4000` to use a local one. Whenever the gateway is unreachable
+(e.g. a Render cold start beyond the 4s timeout), the console switches to its in-browser engine and
+re-probes the gateway every 5s.
 
 ### Verification suite
 

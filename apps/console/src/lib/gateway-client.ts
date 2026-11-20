@@ -20,10 +20,11 @@ import type {
   TrafficBatchResult,
 } from './types';
 
-export const GATEWAY_URL = (process.env.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:4000').replace(/\/+$/, '');
+export const GATEWAY_URL = (process.env.NEXT_PUBLIC_GATEWAY_URL || 'https://aegisgate-gateway.onrender.com').replace(/\/+$/, '');
 /** Must match the gateway's AEGIS_ADMIN_SECRET (dev default). Exposed to the browser: showcase use only. */
 const ADMIN_SECRET = process.env.NEXT_PUBLIC_AEGIS_ADMIN_SECRET || 'ag_admin_master_secret_2026';
-const LIVE_TIMEOUT_MS = 1_200;
+/** Generous enough for a warm Render instance after a short idle; cold starts fall back to the sandbox. */
+const LIVE_TIMEOUT_MS = 4_000;
 /** After a failed live call, stay in sandbox mode this long before probing the gateway again. */
 const RETRY_LIVE_AFTER_MS = 5_000;
 const RESPONSE_HEADERS = [...Object.values(AEGIS_HEADERS), 'retry-after'];
